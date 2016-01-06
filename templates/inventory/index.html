@@ -8,7 +8,7 @@
 {% if inventory_list %}
     <table>
     {% for inventory_item in inventory_list %}
-        <tr><td><li><a href="{{ inventory_item.restocking_link }}/">{{ inventory_item.inventory_text }}</a></td><td>In stock: {{inventory_item.stock}}</td> 
+        <tr><td><li><a href="{{ inventory_item.restocking_link }}/" target="_blank">{{ inventory_item.inventory_text }}</a></td><td>In stock: {{inventory_item.stock}}</td> 
         <td><form action="{% url 'change' inventory_item.id %}" method="post">
         {% csrf_token %}
         <input type="number" name="removed" id="removed{{ inventory_item.id }}" />
