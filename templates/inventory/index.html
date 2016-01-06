@@ -1,3 +1,10 @@
+<h1>Scan to Remove</h1>
+<form action="{% url 'scan' %}" method="post">
+{% csrf_token %}
+        <input type="text" name="barcode" id="removed{{ barcode }}" />
+        <label for="removed{{ barcode }}"></label><br />
+        <input type="submit" value="Remove" />
+        </form>
 {% if inventory_list %}
     <table>
     {% for inventory_item in inventory_list %}
@@ -20,10 +27,3 @@
 {% else %}
     <p>No inventory is available.</p>
 {% endif %}
-<h1>Scan to Remove</h1>
-<form action="{% url 'scan' %}" method="post">
-{% csrf_token %}
-        <input type="text" name="barcode" id="removed{{ barcode }}" />
-        <label for="removed{{ barcode }}"></label><br />
-        <input type="submit" value="Remove" />
-        </form>
