@@ -34,22 +34,16 @@ def change(request, inventoryitem_id):
         return HttpResponseRedirect(reverse('index', args=()))
 
 def scan(request):
-#    item = get_object_or_404(InventoryItem, barcode=barcode)
     try:
 	barcode=request.POST['barcode']
-#        item = InventoryItem.object.get(barcode=request.POST['barcode'])
 	item = InventoryItem.objects.get(barcode=barcode)
 	item.stock -= 1
         item.save()
-#        response = "%s Removed"
-#        return HttpResponse(response % item.inventory_text)
     except:
         response = "Bad barcode"
 	return HttpResponse(response)
     else:
         return HttpResponseRedirect(reverse('index', args=()))
-#        response = "%s Removed"
-#        return HttpResponse(response % item.inventory_text)
 
 def inventoryList(request, inventoryitem_id):
     response = "Here's the Help Desk Inventory %s"
