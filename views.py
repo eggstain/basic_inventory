@@ -17,7 +17,8 @@ def change(request, inventoryitem_id):
     stock_restored = 0
     item = get_object_or_404(InventoryItem, pk=inventoryitem_id)
     try:
-        stock_removed = request.POST['removed']
+	if request.POST['removed'] != "":
+            stock_removed = request.POST['removed']
     except (KeyError, InventoryItem.DoesNotExist):
         stock_removed = 0
     else:
@@ -25,7 +26,8 @@ def change(request, inventoryitem_id):
         item.save()
         return HttpResponseRedirect(reverse('index', args=()))
     try:
-        stock_restored = request.POST['added']
+        if request.POST['added'] != "":
+            stock_restored = request.POST['added']
     except (KeyError, InventoryItem.DoesNotExist):
         stock_restored = 0
     else:
