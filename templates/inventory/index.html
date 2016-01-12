@@ -11,13 +11,13 @@
         <tr><td><li><a href="{{ inventory_item.restocking_link }}/" target="_blank">{{ inventory_item.inventory_text }}</a></td><td>In stock: {{inventory_item.stock}}</td> 
         <td><form action="{% url 'change' inventory_item.id %}" method="post">
         {% csrf_token %}
-        <input type="number" name="removed" id="removed{{ inventory_item.id }}" />
+        <input type="number" min="0" name="removed" id="removed{{ inventory_item.id }}" />
         <label for="removed{{ inventory_item.id }}"></label><br />
         <input type="submit" value="Remove" />
         </form></td>
         <td><form action="{% url 'change' inventory_item.id %}" method="post">
         {% csrf_token %}
-        <input type="number" name="added" id="added{{ inventory_item.id }}" />
+        <input type="number" min="0" name="added" id="added{{ inventory_item.id }}" />
         <label for="added{{ inventory_item.id }}"></label><br />
         <input type="submit" value="Restock" />
         </form></td></tr>
