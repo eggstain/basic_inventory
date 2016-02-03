@@ -22,7 +22,7 @@ from django.utils.encoding import python_2_unicode_compatible
 
 @python_2_unicode_compatible  # only if you need to support Python 2
 class InventoryItem(models.Model):
-"""Any item that might be kept in stock"""
+    """Any item that might be kept in stock"""
     inventory_text = models.CharField(max_length=200)
     barcode = models.CharField(max_length=50)
     restocking_link = models.CharField(max_length=200)

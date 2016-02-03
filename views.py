@@ -28,7 +28,7 @@ from email.mime.text import MIMEText
 import settings
 
 def index(request):
-"""Generate list of items"""
+    """Generate list of items"""
     inventory_list = InventoryItem.objects.order_by('-inventory_text')
     template = loader.get_template('inventory/index.html')
     context = {
@@ -49,7 +49,7 @@ def check_low(item):
         s.quit
 
 def change(request, inventoryitem_id):
-"""Change in-stock value when requested at webpage"""
+    """Change in-stock value when requested at webpage"""
     stock_removed = 0
     stock_restored = 0
     item = get_object_or_404(InventoryItem, pk=inventoryitem_id)
@@ -74,7 +74,7 @@ def change(request, inventoryitem_id):
         return HttpResponseRedirect(reverse('index', args=()))
 
 def scan(request):
-"""If a barcode is scanned into the webpage, remove 1 from stock"""
+    """If a barcode is scanned into the webpage, remove 1 from stock"""
     try:
 	barcode=request.POST['barcode']
 	item = InventoryItem.objects.get(barcode=barcode)
@@ -88,6 +88,6 @@ def scan(request):
         return HttpResponseRedirect(reverse('index', args=()))
 
 def inventory_list(request, inventoryitem_id):
-"""Just a list of inventory"""
+    """Just a list of inventory"""
     response = "Here's the Help Desk Inventory %s"
     return HttpResponse(response % inventoryitem_id)
