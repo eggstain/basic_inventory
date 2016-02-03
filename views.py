@@ -87,7 +87,7 @@ def scan(request):
     else:
         return HttpResponseRedirect(reverse('index', args=()))
 
-def inventoryList(request, inventoryitem_id):
+def inventory_list(request, inventoryitem_id):
 """Just a list of inventory"""
     response = "Here's the Help Desk Inventory %s"
     return HttpResponse(response % inventoryitem_id)
