@@ -1,0 +1,5 @@
+smtp_server="my.smtp_server.com"
+from_field="Helpdesk Inventory System <email@domain>"
+from_address="email@domain"
+to_address="email@domain"
+

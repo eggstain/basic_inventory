@@ -21,6 +21,11 @@ from .models import InventoryItem
 from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
 
+import smtplib
+from email.mime.text import MIMEText
+
+import settings
+
 def index(request):
     inventory_list = InventoryItem.objects.order_by('-inventory_text')
     template = loader.get_template('inventory/index.html')
@@ -28,6 +33,18 @@ def index(request):
         'inventory_list': inventory_list,
     }
     return HttpResponse(template.render(context, request))
+
+def check_low(item):
+    if item.stock < item.minimum_stock:
+        msg = MIMEText("We need more "+str(item.inventory_text)+\
+            ". Stock should be "+str(item.stock)+\
+            " but we only have "+str(item.minimum_stock))
+        msg['Subject'] = "Low inventory notification"
+        msg['From'] = settings.from_field
+        msg['To'] = settings.to_address
+        s = smtplib.SMTP(settings.smtp_server)
+        s.sendmail(settings.from_address,settings.to_address,msg.as_string())
+        s.quit
 
 def change(request, inventoryitem_id):
     stock_removed = 0
@@ -41,6 +58,7 @@ def change(request, inventoryitem_id):
     else:
         item.stock -= int(stock_removed)
         item.save()
+        check_low(item)
         return HttpResponseRedirect(reverse('index', args=()))
     try:
         if request.POST['added'] != "":
@@ -58,6 +76,7 @@ def scan(request):
 	item = InventoryItem.objects.get(barcode=barcode)
 	item.stock -= 1
         item.save()
+        check_low(item)
     except:
         response = "Bad barcode"
 	return HttpResponse(response)
