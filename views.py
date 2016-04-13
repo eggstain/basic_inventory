@@ -37,8 +37,8 @@ def index(request):
 def check_low(item):
     if item.stock < item.minimum_stock:
         msg = MIMEText("We need more "+str(item.inventory_text)+\
-            ". Stock should be "+str(item.stock)+\
-            " but we only have "+str(item.minimum_stock))
+            ". Stock should be "+str(item.minimum_stock)+\
+            " but we only have "+str(item.stock))
         msg['Subject'] = "Low inventory notification"
         msg['From'] = settings.from_field
         msg['To'] = settings.to_address
